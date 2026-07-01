@@ -9,7 +9,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/DipanshuBisen/https://github.com/DipanshuBisen/ArgoCD-EKS.git
+    repoURL: https://github.com/DipanshuBisen/ArgoCD-EKS.git
     targetRevision: HEAD
     path: manifest
 

@@ -1,14 +1,12 @@
 provider "helm" {
   kubernetes = {
-    host                   = aws_eks_cluster.my-cluster.endpoint
-    cluster_ca_certificate = base64decode(aws_eks_cluster.my-cluster.certificate_authority[0].data)
-    token                  = data.aws_eks_cluster_auth.my-cluster.token
+    host                   = data.aws_eks_cluster.cluster.endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
+    token                  = data.aws_eks_cluster_auth.cluster.token
   }
 }
 
-data "aws_eks_cluster_auth" "my-cluster" {
-  name = aws_eks_cluster.my-cluster.name
-}
+
 
 resource "helm_release" "argocd" {
   name             = "argocd"
@@ -17,5 +15,10 @@ resource "helm_release" "argocd" {
   namespace        = "argocd"
   create_namespace = true
 
-  depends_on = [aws_eks_node_group.my-workers]
+  set = [
+    {
+      name  = "server.service.type"
+      value = "LoadBalancer"
+    }
+  ]
 }

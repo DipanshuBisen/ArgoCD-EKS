@@ -1,6 +1,9 @@
 #UI of argocd 
 output "argocd_ui_url" {
-  value = "https://${kubernetes_service_v1.argocd_server.status[0].load_balancer[0].ingress[0].hostname}"
+  value = try(
+    "https://${data.kubernetes_service_v1.argocd_server.status[0].load_balancer[0].ingress[0].hostname}",
+    "LoadBalancer is still being provisioned..."
+  )
 }
 
 # username of argocd
