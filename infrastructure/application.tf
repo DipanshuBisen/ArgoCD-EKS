@@ -1,4 +1,6 @@
-
+provider "kubectl" {
+  
+}
 
 resource "kubectl_manifest" "argocd_application" {
 
