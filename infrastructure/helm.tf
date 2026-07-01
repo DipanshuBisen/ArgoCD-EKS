@@ -11,11 +11,11 @@ data "aws_eks_cluster_auth" "my-cluster" {
 }
 
 resource "helm_release" "argocd" {
-  name = "argocd"
+  name             = "argocd"
   repository       = "https://argoproj.github.io/argo-helm"
   chart            = "argo-cd"
   namespace        = "argocd"
   create_namespace = true
 
-  depends_on = [ aws_eks_node_group.my-workers]
+  depends_on = [aws_eks_node_group.my-workers]
 }
